@@ -1,1 +1,23 @@
 
+name: My GitHub Actions Workflow
+
+on:
+  repository_dispatch:
+    types: [jira.issue_transitioned]
+
+jobs:
+  my-job:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Call Another API
+        run: |
+          # Extract the ticket number from the webhook payload
+          ticket_number="${{ github.event.client_payload.ticket_number }}"
+
+          # Call the another API using the extracted ticket number
+          # Replace with your actual API call
+          curl -X POST "https://your-api-url.com" -d "ticket=${ticket_number}"
